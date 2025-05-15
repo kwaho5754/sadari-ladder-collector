@@ -1,27 +1,23 @@
-from flask import Flask, send_file
-import pandas as pd
+# ✅ server_web.py (서버에 저장된 ladder_results.csv 줄 수 확인용)
+from flask import Flask
+import csv
 import os
 
 app = Flask(__name__)
 
 @app.route("/count")
-def count_csv_rows():
-    csv_path = "ladder_results.csv"
-    if not os.path.exists(csv_path):
+def count_ladder_rows():
+    filename = "ladder_results.csv"
+    if not os.path.exists(filename):
         return "❌ ladder_results.csv 파일이 존재하지 않습니다."
-    try:
-        df = pd.read_csv(csv_path)
-        return f"✅ 현재 누적 회차 수: {len(df)}개"
-    except Exception as e:
-        return f"⚠️ CSV 열기 오류: {e}"
 
-@app.route("/download")
-def download_csv():
-    csv_path = "ladder_results.csv"
-    if not os.path.exists(csv_path):
-        return "❌ ladder_results.csv 파일이 없습니다."
-    return send_file(csv_path, as_attachment=True)
+    try:
+        with open(filename, newline="", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+            return f"✅ 현재까지 저장된 회차 수: {len(rows)-1} 개"  # 헤더 제외
+    except Exception as e:
+        return f"⚠️ 오류 발생: {e}"
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))  # Railway용 포트 기본값 8080
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=8080)
