@@ -1,3 +1,2 @@
-web: python web_app.py
+web: python server_web.py
 worker: python collect_ladder.py
-web: python count_web.py
