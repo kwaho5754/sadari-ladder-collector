@@ -27,7 +27,7 @@ def wait_for_next_result():
     last_round = load_last_round()
     print(f"📌 현재 저장된 마지막 회차: {last_round}")
 
-    timeout = 60  # 최대 대기 시간 (초)
+    timeout = 60
     elapsed = 0
     while elapsed < timeout:
         try:
@@ -44,12 +44,3 @@ def wait_for_next_result():
         time.sleep(5)
         elapsed += 5
     print("❌ 새 회차 대기 시간 초과")
-
-def run():
-    while True:
-        wait_for_next_result()
-        print("⏱️ 다음 5분까지 대기...\n")
-        time.sleep(300)
-
-if __name__ == "__main__":
-    run()
