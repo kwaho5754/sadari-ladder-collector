@@ -13,7 +13,7 @@ def count_csv_rows():
         df = pd.read_csv(csv_path)
         return f"✅ 현재 누적 회차 수: {len(df)}개"
     except Exception as e:
-        return f"⚠️ 오류 발생: {str(e)}"
+        return f"⚠️ CSV 열기 실패: {e}"
 
 if __name__ == "__main__":
     import os
