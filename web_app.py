@@ -1,5 +1,7 @@
 from flask import Flask, render_template_string
-import predictor  # predictor.py의 predict() 함수 사용
+import predictor  # predictor.py의 get_prediction_list() 함수 사용
+import pandas as pd
+import os
 
 app = Flask(__name__)
 
@@ -15,6 +17,17 @@ def predict_route():
     </ol>
     """
     return render_template_string(html, data=data)
+
+@app.route("/count")
+def count_csv_rows():
+    csv_path = "ladder_results.csv"
+    if not os.path.exists(csv_path):
+        return "❌ ladder_results.csv 파일이 존재하지 않습니다."
+    try:
+        df = pd.read_csv(csv_path)
+        return f"✅ 현재 누적 회차 수: {len(df)}개"
+    except Exception as e:
+        return f"⚠️ 오류 발생: {str(e)}"
 
 if __name__ == "__main__":
     app.run(debug=True)
