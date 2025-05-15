@@ -44,3 +44,9 @@ def wait_for_next_result():
         time.sleep(5)
         elapsed += 5
     print("❌ 새 회차 대기 시간 초과")
+
+# ✅ 여기가 실행 진입점
+if __name__ == "__main__":
+    while True:
+        wait_for_next_result()
+        time.sleep(300)
